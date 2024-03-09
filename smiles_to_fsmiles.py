@@ -267,7 +267,6 @@ def revert_chain(chain, group_index, chain_subgroup_match, subgroup):
     element_list = []
     # get elements from the chain one by one and add them to element list
     while len(chain) > 0:
-        #element_match = re.search(r'^[A-Z=][a-z]?[0-9]*=?', chain)
         element_match = re.search(r'^[A-Z=][a-z]?[0-9]*', chain)
         if element_match:
             element = element_match.group()
@@ -276,7 +275,6 @@ def revert_chain(chain, group_index, chain_subgroup_match, subgroup):
             # add element to the element list
             element_list.append(element)
             # remove element from the chain
-            #chain = re.sub('^[A-Z=][a-z]?[0-9]*=?', '', chain)
             chain = re.sub('^[A-Z=][a-z]?[0-9]*', '', chain)
     # revert order of elements in the chain
     element_list_rev = ''.join([element for element in element_list[::-1]])
@@ -287,12 +285,8 @@ def revert_chain(chain, group_index, chain_subgroup_match, subgroup):
     # if chemical group does not have subgroup or current chain is subgroup
     if (chain_subgroup_match == False) | (subgroup == True):
         # add group index to the last element of the chain
-        #element_list_rev = re.sub(r'([A-Z][a-z]?[0-9]*)(=)([A-Z][a-z]?[0-9]*)', r'\1\3\2', element_list_rev)
-        #element_list_rev = re.sub(r'([A-Z][a-z]?)=?\)?$', r'\g<1>{}'.format(group_index), element_list_rev)
         element_list_rev = re.sub(r'([A-Z][a-z]?)(=?)\)?$', r'\g<1>{}\2'.format(group_index), element_list_rev)
-
-        #element_list_rev = re.sub(r'([A-Z][a-z]?)(=?\)?$)', r'\g<1>{}\g<2>'.format(group_index), element_list_rev)
-    
+        
     return element_list_rev
 
 def main():
